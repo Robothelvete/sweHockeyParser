@@ -151,12 +151,20 @@ namespace sweHockeyParser
             return gamesByLeage;
         }
 
-        /// <summary>
-        /// Fetch the HTML from swehockey 
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public static string FetchScheduleHtml(string url)
+		public static Dictionary<String, List<Game>> GamesScheduleFromDailyHtmlAsDictionary(string html) {
+			var leagueGames = GamesScheduleFromDailyHtml(html);
+			var gamesByLeague = new Dictionary<String, List<Game>>();
+			foreach(LeagueGames leagueGame in leagueGames) {
+				gamesByLeague.Add(leagueGame.League, leagueGame.Games);
+			}
+			return gamesByLeague;
+		}
+		  /// <summary>
+		  /// Fetch the HTML from swehockey 
+		  /// </summary>
+		  /// <param name="url"></param>
+		  /// <returns></returns>
+		public static string FetchScheduleHtml(string url)
         {
             using (HttpClient client = new HttpClient())
             {
